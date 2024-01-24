@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang:1.17.6-alpine3.15 as builder
+FROM golang:1.19.13-alpine3.18 as builder
 
 WORKDIR /go/src/github.com/kubeflow/pipelines
 COPY . .
@@ -30,7 +30,7 @@ RUN go-licenses csv ./backend/src/crd/controller/scheduledworkflow > /tmp/licens
     diff /tmp/licenses.csv backend/third_party_licenses/swf.csv && \
     go-licenses save ./backend/src/crd/controller/scheduledworkflow --save_path /tmp/NOTICES
 
-FROM alpine:3.8
+FROM alpine:3.19
 WORKDIR /bin
 
 COPY --from=builder /bin/controller /bin/controller
